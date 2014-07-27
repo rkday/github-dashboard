@@ -146,7 +146,7 @@ updateIssuesLoop repoOwner repoNames auth resultRef = do
                    
 main =
     do
-      cfg <- load [Required "/home/rkd/haskell-github/githubissues.cfg"]
+      cfg <- load [Required "./githubissues.cfg"]
       lst <- require cfg "repoNames"
       user <- require cfg "repoOwner"
       oauthToken <- Data.Configurator.lookup cfg "oauthToken"

@@ -7974,7 +7974,7 @@ function Vj(a) {
   a = new V(null, 4, 5, W, [b, new V(null, 2, 5, W, [Th, new V(null, 3, 5, W, [qi, new r(null, 1, [pi, a.b ? a.b("url") : a.call(null, "url")], null), a.b ? a.b("description") : a.call(null, "description")], null)], null), new V(null, 2, 5, W, [Th, a.b ? a.b("when_opened") : a.call(null, "when_opened")], null), new V(null, 2, 5, W, [Th, a.b ? a.b("priority") : a.call(null, "priority")], null)], null);
   return Hj(a);
 }
-Fj.d("http://localhost:3000/issues", N([new r(null, 1, [oi, function(a) {
+Fj.d("/issues", N([new r(null, 1, [oi, function(a) {
   Tj(document.getElementById("openIssuesTable"), function() {
     var b = document.createElement("table");
     b.className = "table table-striped display";
@@ -8015,7 +8015,7 @@ Fj.d("http://localhost:3000/issues", N([new r(null, 1, [oi, function(a) {
   sh.d(N([S.a("recentlyClosed", a)], 0));
   return $("#openIssuesTable").dataTable(zh(new r(null, 4, ["paging", !1, "orderClasses", !1, "dom", "ilfrtp", "order", new V(null, 2, 5, W, [2, "asc"], null)], null)));
 }], null)], 0));
-Fj.d("http://localhost:3000/recentlyClosed", N([new r(null, 1, [oi, function(a) {
+Fj.d("/recentlyClosed", N([new r(null, 1, [oi, function(a) {
   Tj(document.getElementById("recentlyClosedTable"), function() {
     var b = document.createElement("table");
     b.className = "table table-striped display";
