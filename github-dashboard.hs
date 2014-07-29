@@ -132,8 +132,8 @@ updateIssues repoOwner repoNames auth resultRef = do
   closedIssues <- fmap notPRs $ multiGetIssues repoOwner repoNames auth [OnlyClosed, (Since fortnightAgo)]
   let openPRs = onlyPRs everything
   let openIssues = notPRs everything
-  let openIssueCount = either length (length . takeWhile (openedSince fortnightAgo)) openIssues
-  let recentlyClosedIssues = either Left (Right . (takeWhile (closedSince fortnightAgo))) closedIssues
+  let openIssueCount = either length (length . filter (openedSince fortnightAgo)) openIssues
+  let recentlyClosedIssues = either Left (Right . (filter (closedSince fortnightAgo))) closedIssues
   let closedIssueCount = either length length recentlyClosedIssues
   writeIORef resultRef (CrossThreadData openIssues openPRs recentlyClosedIssues closedIssueCount openIssueCount)
   putStrLn "Updated issues from Github"
