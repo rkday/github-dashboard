@@ -132,7 +132,7 @@ updateIssues repoOwner repoNames auth resultRef = do
   closedIssues <- fmap notPRs $ multiGetIssues repoOwner repoNames auth [OnlyClosed, (Since fortnightAgo)]
   let openPRs = onlyPRs everything
   let openIssues = notPRs everything
-  let openIssueCount = either length (length . filter (openedSince fortnightAgo)) openIssues
+  let openIssueCount = (either length (length . filter (openedSince fortnightAgo)) openIssues) + (either length (length . filter (openedSince fortnightAgo)) closedIssues)
   let recentlyClosedIssues = either Left (Right . (filter (closedSince fortnightAgo))) closedIssues
   let closedIssueCount = either length length recentlyClosedIssues
   writeIORef resultRef (CrossThreadData openIssues openPRs recentlyClosedIssues closedIssueCount openIssueCount)
@@ -153,7 +153,7 @@ main =
       let oauth = fmap GithubOAuth oauthToken
       ctd <- newIORef $ CrossThreadData (Right []) (Right []) (Right []) (-1) (-1)
       forkIO $ updateIssuesLoop user lst oauth ctd
-      scotty 3000 $ do
+      scotty 3005 $ do
         get "/prs" $ do
                       openPRs <- liftIO $ fmap prs $ readIORef ctd
                       scottyPRs openPRs (-1) (-1)
