@@ -30,15 +30,17 @@ data TruncatedIssue =  TruncatedIssue {
       priority :: String,
       issueURL :: Maybe String,
       title :: String,
-      createdBy :: String
+      createdBy :: String,
+      ownedBy :: String
     } deriving Show
 
 instance ToJSON TruncatedIssue where
-    toJSON (TruncatedIssue whenOpened whenClosed priority issueURL title createdBy) = object ["description" .= title,
+    toJSON (TruncatedIssue whenOpened whenClosed priority issueURL title createdBy ownedBy) = object ["description" .= title,
                                                                                                 "when_opened" .= whenOpened,
                                                                                                 "when_closed" .= whenClosed,
                                                                                                 "url" .= issueURL,
                                                                                                 "raiser" .= createdBy,
+                                                                                                "owner" .= ownedBy,
                                                                                                 "priority" .= priority
                                                                                                ]
 getFortnightAgo :: IO UTCTime
@@ -60,6 +62,7 @@ summariseIssue issue =
                        (issueHtmlUrl issue)
                        (issueTitle issue)
                        (githubOwnerLogin $ issueUser issue)
+                       (fromMaybe "nobody" $ fmap githubOwnerLogin $ issueAssignee issue)
 
 doToLeft :: (a -> c) -> (Either a b) -> (Either c b)
 doToLeft fn (Left a) = Left (fn a)
